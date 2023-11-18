@@ -11,6 +11,7 @@ const CategoriaControler = {
         'message': 'Sucesso ao carregar categorias'
      });
     } catch (error) {
+      console.log(error);
       res.status(500).json({ 
         'type': "E",
         'categorias': [],

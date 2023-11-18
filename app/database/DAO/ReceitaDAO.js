@@ -1,4 +1,4 @@
-const conection = require("dbConection.js");
+const conection = require("../dbConection.js");
 
 const ReceitaDao = {
   
@@ -8,19 +8,25 @@ const ReceitaDao = {
         });
     },
 
+    async selectReceitaId(receita) {
+        return conection.openDB().then((db) => {
+            return db.all("SELECT * FROM receitas WHERE id = ?", [receita.id]).then((res) => res);
+        });
+    },
+
     async selectTodasReceitasTitulo(receita) {
         return conection.openDB().then((db) => {
             return db.all("SELECT * FROM receitas WHERE titulo LIKE ?", [`%${receita.titulo}%`]).then((res) => res);
         });
     },
 
-    async selectTodasReceitasTitulo(receita) {
+    async selectTodasReceitasTituloUsuario(receita) {
         return conection.openDB().then((db) => {
             return db.all("SELECT * FROM receitas WHERE titulo LIKE ? AND id_usuario = ?", [`%${receita.titulo}%`, receita.id_usuario]).then((res) => res);
         });
     },
 
-    async selectTodasReceitasTitulo(receita) {
+    async selectTodasReceitasCategoria(receita) {
         return conection.openDB().then((db) => {
             return db.all("SELECT * FROM receitas WHERE id_categoria = ?", [receita.id_categoria]).then((res) => res);
         });
@@ -29,6 +35,12 @@ const ReceitaDao = {
     async deleteReceita(receita) {
         return conection.openDB().then((db) => {
             return db.run("DELETE FROM receitas WHERE id = ?", [ receita.id]);
+        });
+    },
+
+    async deleteReceitaUsuario(receita_id_usuario) {
+        return conection.openDB().then((db) => {
+            return db.run("DELETE FROM receitas WHERE id_usuario = ?", [receita_id_usuario]);
         });
     },
 

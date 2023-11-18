@@ -1,4 +1,4 @@
-const conection = require("dbConection.js");
+const conection = require("../dbConection.js");
 
 const FavoritoDao = {
   
@@ -11,6 +11,18 @@ const FavoritoDao = {
     async deleteFavorito(favorito) {
         return conection.openDB().then((db) => {
             return db.run("DELETE FROM favoritos WHERE id_usuario = ? AND id_receita = ? ", [ favorito.id_usuario, favorito.id_receita]);
+        });
+    },
+
+    async deleteFavoritoPorReceita(favorito_id_receita) {
+        return conection.openDB().then((db) => {
+            return db.run("DELETE FROM favoritos WHERE id_receita = ? ", [favorito_id_receita]);
+        });
+    },
+
+    async deleteFavoritoPorUsuario(favorito_id_usuario) {
+        return conection.openDB().then((db) => {
+            return db.run("DELETE FROM favoritos WHERE id_usuario = ? ", [favorito_id_usuario]);
         });
     },
 

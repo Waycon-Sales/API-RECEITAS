@@ -1,4 +1,5 @@
-const routes = require('./app/routes/routes.js')
+const routes = require('./routes/routes.js')
+const dbtables = require("./database/dbTables.js");
 
 const bodyParser = require('body-parser')
 const express = require("express");
@@ -8,6 +9,9 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(routes)
+
+//dbtables.createTables();
+//dbtables.dropTables();
 
 const port = 3000;
 app.listen(port, () => {

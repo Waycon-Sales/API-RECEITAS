@@ -1,4 +1,4 @@
-const conection = require("dbConection.js");
+const conection = require("../dbConection.js");
 
 const RefeicaoDao = {
   
@@ -11,6 +11,12 @@ const RefeicaoDao = {
     async deleteRefeicao(refeicao) {
         return conection.openDB().then((db) => {
             return db.run("DELETE FROM refeicao_planejada WHERE id = ?", [ refeicao.id]);
+        });
+    },
+    
+    async deleteRefeicaoUsuario(refeicao_id_usuario) {
+        return conection.openDB().then((db) => {
+            return db.run("DELETE FROM refeicao_planejada WHERE id_usuario = ?", [ refeicao_id_usuario]);
         });
     },
 

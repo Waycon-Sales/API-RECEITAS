@@ -1,4 +1,4 @@
-const conection = require("dbConection.js");
+const conection = require("../dbConection.js");
 
 const UsuarioDao = {
     async insertUsuario(usuario) {
@@ -16,10 +16,28 @@ const UsuarioDao = {
       });
     },
 
-    async selectUsuarios(usuario) {
+    async selectNomeUsuarios(usuario) {
         return conection.openDB().then((db) => {
-          return db.all("SELECT * FROM usuario WHERE nome_usuario LIKE ?", [`%${usuario.nome_usuario}%`]).then((res) => res);
+          return db.all("SELECT id, nome, sobrenome, nome_usuario FROM usuario WHERE nome_usuario LIKE ?", [`%${usuario.nome_usuario}%`]).then((res) => res);
         });
+    },
+
+    async selectUsuarioId(idusuario) {
+      return conection.openDB().then((db) => {
+        return db.all("SELECT id, nome, sobrenome, nome_usuario FROM usuario WHERE id = ?", [idusuario]).then((res) => res);
+      });
+    },
+
+    async selectLoginUsuario(usuario) {
+      return conection.openDB().then((db) => {
+        return db.all("SELECT * FROM usuario WHERE nome_usuario = ? AND senha = ? OR email = ? AND senha = ? ", [usuario.nome_usuario, usuario.senha, usuario.email, usuario.senha]).then((res) => res);
+      });
+    },
+
+    async selectNomeUsuariosExistente(usuario) {
+      return conection.openDB().then((db) => {
+        return db.all("SELECT * FROM usuario WHERE nome_usuario = ?", [usuario.nome_usuario]).then((res) => res);
+      });
     },
 
     async updateUsuario(usuario) {

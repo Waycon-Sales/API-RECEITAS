@@ -41,12 +41,12 @@ const FavoritoControler = {
     try {
       if(req.body != undefined && req.body != []){
         var favs = req.body.favoritos;
-        if(favs.length != 0){
+        if(favs.length != 0 && Utils.naoNulo(favs[0].id_usuario)){
             for(var i = 0; i < favs.length; i++){
                 let fav = new FavoritoModel(favs[i]);
                 await FavoritoDAO.deleteFavorito(fav);
             }
-            var favoritos = await FavoritoDAO.selectFavoritos(fav)
+            var favoritos = await FavoritoDAO.selectFavoritos(new FavoritoModel(favs[0]))
             res.status(200).json({ 
                 'type': "S",
                 'favoritos': favoritos,
@@ -85,7 +85,7 @@ const FavoritoControler = {
             res.status(200).json({ 
                 'type': "S",
                 'favoritos': favoritos,
-                'message': "Sucesso ao carregar favoritos do usuário" 
+                'message': "Sucesso ao inserir favoritos do usuário" 
             });
         }else{
             res.status(400).json({ 
