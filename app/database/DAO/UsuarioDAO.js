@@ -43,8 +43,8 @@ const UsuarioDao = {
     async updateUsuario(usuario) {
       await conection.openDB().then((db) => {
         return db.run(
-          "UPDATE usuario SET nome = ?, sobrenome = ?, nome_usuario = ?, email = ? WHERE id = ?",
-          [usuario.nome, usuario.sobrenome, usuario.nome_usuario, usuario.email, usuario.id]
+          "UPDATE usuario SET nome = ?, sobrenome = ?, nome_usuario = ?, email = ?, senha = ? WHERE id = ?",
+          [usuario.nome, usuario.sobrenome, usuario.nome_usuario, usuario.email, usuario.senha, usuario.id]
         );
       });
     },
