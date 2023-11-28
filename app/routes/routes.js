@@ -17,7 +17,7 @@ router.get('/selectUserId',   UsuarioController.selectUsuarioId);
 router.put('/updateUser',     UsuarioController.updateUsuario);
 router.delete('/deleteUser',     UsuarioController.deleteUsuario);
 
-// registrar usuário, efetuar login, selecionar usuário por nome, selecionar usuário por ID, atualizar usuário
+// registrar usuário, efetuar login, selecionar usuário por nome, selecionar usuário por ID, atualizar usuário, deletar usuário
 
 //categoria
 router.get('/selectCategories', CategoriaController.selectCategorias);
@@ -38,8 +38,8 @@ router.post('/selectRecipeForTitleUser', ReceitaController.selectReceitasUsuario
 
 //favoritos
 router.post('/registerFav', FavoritosController.insertFavoritosUsuario);
-router.post('/selectFavs',  FavoritosController.selectFavoritosUsuario);
-router.post('/deleteFavs',  FavoritosController.deleteFavoritosUsuario);
+router.get('/selectFavs',  FavoritosController.selectFavoritosUsuario);
+router.delete('/deleteFavs',  FavoritosController.deleteFavoritosUsuario);
 
 //registrar favorito, selecionar favorito, deletar favorito
 

@@ -87,7 +87,7 @@ const UsuarioController = {
 
     async deleteUsuario(req, res) {
         try{
-            if(req.body != [] && req.body != undefined ){
+            if(req.query != [] && req.query != undefined ){
                 let usuario = new UsuarioModel(req.query);
                 if(Utils.naoNulo(usuario.id)){
                         await FavoritoDAO.deleteFavoritoPorUsuario(usuario.id);
@@ -125,7 +125,7 @@ const UsuarioController = {
 
     async selectUsuarioId(req, res) {
         try{
-            if(req.body != [] && req.body != undefined ){
+            if(req.query != [] && req.query != undefined ){
                 let usuario = new UsuarioModel(req.query);
                 if(Utils.naoNulo(usuario.id)){      
                        let usuarios =  await UsuarioDAO.selectUsuarioId(usuario.id);
@@ -170,7 +170,7 @@ const UsuarioController = {
 
     async selectNomeUsuario(req, res) {
         try{
-            if(req.body != [] && req.body != undefined ){
+            if(req.query != [] && req.query != undefined ){
                 let usuario = new UsuarioModel(req.query);
                 if(Utils.naoNulo(usuario.nome_usuario)){      
                         let usuarios = await UsuarioDAO.selectNomeUsuarios(usuario);

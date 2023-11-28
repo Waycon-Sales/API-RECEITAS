@@ -5,8 +5,8 @@ const Utils = require("../utils/Utils.js");
 const FavoritoControler = {
   async selectFavoritosUsuario(req, res) {
     try {
-      if(req.body != undefined && req.body != []){
-        var fav = new FavoritoModel(req.body);
+      if(req.query != undefined && req.query != []){
+        var fav = new FavoritoModel(req.query);
         if(Utils.naoNulo(fav.id_usuario)){
             var favoritos = await FavoritoDAO.selectFavoritos(fav)
             res.status(200).json({ 
