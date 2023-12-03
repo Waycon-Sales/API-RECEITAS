@@ -7,8 +7,8 @@ const Utils = require("../utils/Utils.js");
 const RefeicaoController = {
   async selectRefeicaoUsuario(req, res) {
     try {
-        if(req.body != [] && req.body != undefined ){
-            let refeicaoModel = new RefeicaoModel(req.body)
+        if(req.query != [] && req.query != undefined ){
+            let refeicaoModel = new RefeicaoModel(req.query)
             if(Utils.naoNulo(refeicaoModel.id_usuario)){
                 const refeicoesUsuario = await RefeicaoDAO.selectTodasRefeicoesUsuario(refeicaoModel);
                 console.log(refeicoesUsuario);
@@ -43,18 +43,15 @@ const RefeicaoController = {
     try {
         if(req.body != [] && req.body != undefined ){
             let refeicaoModel = new RefeicaoModel(req.body)
-            if(Utils.naoNulo(refeicaoModel.id_usuario) && Utils.naoNulo(refeicaoModel.horario) && Utils.naoNulo(refeicaoModel.tipo) && Utils.naoNulo(refeicaoModel.efetuada)){
+            if(Utils.naoNulo(refeicaoModel.id_usuario) && Utils.naoNulo(refeicaoModel.horario) && Utils.naoNulo(refeicaoModel.tipo) && refeicaoModel.efetuada != undefined){
                 if(Utils.naoNulo(refeicaoModel.titulo) == false && Utils.naoNulo(refeicaoModel.id_receita)){
                     let receitaModel = new ReceitaModel({"id": refeicaoModel.id_receita});
-                    console.log(receita.id);
                     let receitaBD = await ReceitaDAO.selectReceitaId(receitaModel);
-                    console.log( receitaModel.titulo);
-                    if(Utils.naoNulo(receitaBD.titulo)){
-                        receitaModel.titulo = "refeição";    
+                    if(Utils.naoNulo(receitaBD[0].titulo)){
+                        refeicaoModel.titulo = receitaBD[0].titulo; 
                     }else{
-                        receitaModel.titulo = receitaBD.titulo; 
+                        refeicaoModel.titulo = "refeição";  
                     }
-                    console.log( receitaModel.titulo);
                     await RefeicaoDAO.insertRefeicao(refeicaoModel);
                     res.status(200).json({
                         'type': "S",
@@ -70,7 +67,7 @@ const RefeicaoController = {
                     res.status(400).json({ 
                         'type': "E",
                         'refeicoes': [],
-                        'message': "Campos de titulo e refeicao está vazio estão vazios, preencha um dos dois corretamente" 
+                        'message': "Campos de titulo e receita estão vazio estão vazios, preencha um dos dois corretamente" 
                     }); 
                 }       
             }else{
@@ -88,6 +85,7 @@ const RefeicaoController = {
             }); 
         }
     } catch (error) {
+        console.log(error);
       res.status(500).json({ 
         'type': "E",
         'refeicoes': [],
@@ -153,10 +151,10 @@ const RefeicaoController = {
             var refs = req.body.refeicoes;
             if(refs.length != 0 && Utils.naoNulo(refs[0].id_usuario)){
                 for(var i = 0; i < refs.length; i++){
-                    let ref = new refeicaoModel(refs[i]);
+                    let ref = new RefeicaoModel(refs[i]);
                     await RefeicaoDAO.deleteRefeicao(ref);
                 }
-                var refeicoes = await RefeicaoDAO.selectTodasRefeicoesUsuario(new refeicaoModel(refs[0]));
+                var refeicoes = await RefeicaoDAO.selectTodasRefeicoesUsuario(new RefeicaoModel(refs[0]));
                 res.status(200).json({ 
                     'type': "S",
                     'refeicoes': refeicoes,
@@ -177,6 +175,7 @@ const RefeicaoController = {
             }); 
         }
     } catch (error) {
+        console.log(error)
       res.status(500).json({ 
         'type': "E",
         'refeicao': [],

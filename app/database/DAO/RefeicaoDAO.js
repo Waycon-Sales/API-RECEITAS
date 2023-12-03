@@ -21,6 +21,7 @@ const RefeicaoDao = {
     },
 
     async insertRefeicao(refeicao) {
+        console.log(refeicao.titulo)
         return conection.openDB().then((db) => {
             return db.run("INSERT INTO refeicao_planejada (titulo, horario, tipo, efetuada, id_usuario, id_receita) VALUES (?, ?, ?, ?, ?, ?) ", [refeicao.titulo,refeicao.horario,refeicao.tipo ,refeicao.efetuada,refeicao.id_usuario,refeicao.id_receita]);
         });

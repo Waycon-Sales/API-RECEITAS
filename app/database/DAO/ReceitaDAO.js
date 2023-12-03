@@ -9,6 +9,7 @@ const ReceitaDao = {
     },
 
     async selectReceitaId(receita) {
+        
         return conection.openDB().then((db) => {
             return db.all("SELECT * FROM receitas WHERE id = ?", [receita.id]).then((res) => res);
         });
@@ -22,7 +23,7 @@ const ReceitaDao = {
 
     async selectTodasReceitasTituloUsuario(receita) {
         return conection.openDB().then((db) => {
-            return db.all("SELECT * FROM receitas WHERE titulo LIKE ? AND id_usuario = ?", [`%${receita.titulo}%`, receita.id_usuario]).then((res) => res);
+            return db.all("SELECT * FROM receitas WHERE UPPER(titulo) LIKE (?) AND id_usuario = ?", [`%${receita.titulo}%`, receita.id_usuario]).then((res) => res);
         });
     },
 

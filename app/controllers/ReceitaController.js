@@ -7,8 +7,8 @@ const Utils = require("../utils/Utils.js");
 const ReceitaControler = {
   async selectReceitasId(req, res) {
     try {
-        if(req.body != [] && req.body != undefined ){
-            let receitaModel = new ReceitaModel(req.body)
+        if(req.query != [] && req.query != undefined ){
+            let receitaModel = new ReceitaModel(req.query)
             if(Utils.naoNulo(receitaModel.id)){
                 const receita = await ReceitaDAO.selectReceitaId(receitaModel);
                 console.log(receita);
@@ -41,8 +41,8 @@ const ReceitaControler = {
 
   async selectReceitasUsuario(req, res) {
     try {
-        if(req.body != [] && req.body != undefined ){
-            let receitaModel = new ReceitaModel(req.body)
+        if(req.query != [] && req.query != undefined ){
+            let receitaModel = new ReceitaModel(req.query)
             if(Utils.naoNulo(receitaModel.id_usuario)){
                 const receitasUsuario = await ReceitaDAO.selectTodasReceitasUsuario(receitaModel);
                 console.log(receitasUsuario);
@@ -75,9 +75,10 @@ const ReceitaControler = {
 
   async selectReceitasTitulo(req, res) {
     try {
-        if(req.body != [] && req.body != undefined ){
-            let receitaModel = new ReceitaModel(req.body)
+        if(req.query != [] && req.query != undefined ){
+            let receitaModel = new ReceitaModel(req.query)
             if(Utils.naoNulo(receitaModel.titulo)){
+                console.log(receitaModel.titulo)
                 const receitasTitulo = await ReceitaDAO.selectTodasReceitasTitulo(receitaModel);
                 console.log(receitasTitulo);
                 res.status(200).json({
@@ -109,8 +110,8 @@ const ReceitaControler = {
 
   async selectReceitasUsuarioTitulo(req, res) {
     try {
-        if(req.body != [] && req.body != undefined ){
-            let receitaModel = new ReceitaModel(req.body)
+        if(req.query != [] && req.query != undefined ){
+            let receitaModel = new ReceitaModel(req.query)
             if(Utils.naoNulo(receitaModel.id_usuario) && Utils.naoNulo(receitaModel.titulo) ){
                 const receitasUsuarioTitulo = await ReceitaDAO.selectTodasReceitasTituloUsuario(receitaModel);
                 console.log(receitasUsuarioTitulo);
@@ -143,8 +144,8 @@ const ReceitaControler = {
   
   async selectReceitasCategoria(req, res) {
     try {
-        if(req.body != [] && req.body != undefined ){
-            let receitaModel = new ReceitaModel(req.body)
+        if(req.query != [] && req.query != undefined ){
+            let receitaModel = new ReceitaModel(req.query)
             if(Utils.naoNulo(receitaModel.id_categoria)){
                 const receitasCategoria = await ReceitaDAO.selectTodasReceitasCategoria(receitaModel);
                 console.log(receitasCategoria);

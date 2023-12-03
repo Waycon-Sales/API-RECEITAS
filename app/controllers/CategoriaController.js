@@ -4,7 +4,6 @@ const CategoriaControler = {
   async selectCategorias(req, res) {
     try {
       const categorias = await CategoriaDAO.selectCategorias();
-      console.log(categorias);
       res.status(200).json({
         'type': "S",
         'categorias': categorias,
@@ -18,6 +17,30 @@ const CategoriaControler = {
         'message': "Erro ao recuperar categorias" });
     }
   },
+
+  async insertCategorias(req, res){
+    try{
+      const categorias = await CategoriaDAO.selectCategorias();
+      if(categorias.length > 0){
+        res.status(200).json({ 
+          'type': "S",
+          'message': "Categorias já criadas" });
+      }else{
+        await CategoriaDAO.insertCategorias();
+        res.status(200).json({ 
+          'type': "S",
+          'message': "Categorias criadas" });
+
+      }
+    }catch(error){
+      console.log('Erro ao criar categorias')
+      console.log(error)
+      res.status(500).json({ 
+        'type': "E",
+        'message': "Erro ao criar categorias" });
+    }
+    
+  }
   
 };
 
