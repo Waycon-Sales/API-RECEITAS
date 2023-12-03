@@ -1,0 +1,499 @@
+{
+	"info": {
+		"_postman_id": "4b857e75-0f28-4ff4-9f65-c2ce7c94767a",
+		"name": "API BANCO DE DADOS - RECEITASAPI",
+		"description": "A aplicação é uma API que tem como tema uma aplicação de receitas.\n\nConsiste em 5 tabelas Usuários, Receitas, Refeições, Favoritos e Categorias.\n\nA ideia é que o usuário consiga cadastrar-se, logar, criar receitas, marcar receitas como favoritos, buscar receitas por categorias, nome e etc, criar um planejamento de refeições diarias, podendo ser atreladas a uma receita ou não e realizar dentre outras operações do crud tanto nas receitas e refeições como nas suas receitas favoritas e nos seus proprios dados enquanto usuário do sistema.\n\nA API é bem completa e foi desenvolvida pensando numa implementação por meio de um aplicativo ou website, a mesma conta com 23 rotas e todas interagem com o banco de dados criado em SQLite\n\n**Para utilizar execute a API e modifique a variavel host para o seu IP**\n\nRotas de usuário possibilitam as seguintes funcionalidades: **registrar usuário**, **efetuar login**, **selecionar usuário por nome**, **selecionar usuário por ID**, **atualizar usuário, deletar usuário**;\n\nRotas de receitas possibilitam: **inserir receita**, **deletar receita**, **atualizar receita**, **selecionar** **receita por categoria**, **selecionar receita por titulo**, **selecionar receita por ID**, **selecionar receita por usuário que a criou**, **selecionar por titulo e por usuário**;\n\nRotas de refeições possibilitam: **registrar refeição**, **deletar refeição**, **selecionar refeições de determinado usuário** e **atualizar refeições;**\n\nRotas de favoritos possibilitam: **registrar receita favorita**, **selecionar receitas favoritas do usuário** e **deletar favorito receita favorita;**\n\nRota de categoria possibilita: **selecionar categorias e criar as categorias fixas da aplicação.**\n\nObs: as categorias são inseridas no momento da criação das tabelas.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29925561"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Registrar Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"Antonio\",\r\n    \"sobrenome\":\"Sales\",\r\n    \"nome_usuario\":\"Eren04567\",\r\n    \"email\":\"teste@gmail.com\",\r\n    \"senha\":\"teste123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/registerUser"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome_usuario\":\"Eren045678\", //opcional caso tenha e-mail\r\n    \"email\":\"\", //opcional caso tenha nome_usuario\r\n    \"senha\":\"teste13\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/loginUser"
+					},
+					"response": []
+				},
+				{
+					"name": "Selecionar Por nome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/selectUserName?nome_usuario=Eren",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"selectUserName"
+							],
+							"query": [
+								{
+									"key": "nome_usuario",
+									"value": "Eren"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Selecionar Por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/selectUserId?id=2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"selectUserId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"1\",\r\n    \"nome\":\"Antonio\",\r\n    \"sobrenome\":\"Freire\",\r\n    \"nome_usuario\":\"Eren045678\",\r\n    \"email\":\"teste@gmail.com\",\r\n    \"senha\":\"teste13\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/updateUser"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/deleteUser?id=2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"deleteUser"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categorias",
+			"item": [
+				{
+					"name": "Criar as categorias fixas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{host}}/criarCategorias"
+					},
+					"response": []
+				},
+				{
+					"name": "Selecionar Categorias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{host}}/selectCategories"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Receitas",
+			"item": [
+				{
+					"name": "Registrar receita",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_usuario\": 1,\r\n    \"id_categoria\": 6,\r\n    \"titulo\":\"Beterraba ao molho de água\",\r\n    \"ingredientes\":\"1 litro de água; 3 Beterrabas;\",\r\n    \"instrucoes\":\"Adicione 1 litro de agua em uma panela, corte as beterrabas em rodelas e adicione na panela; Ligue o fogo, mexa tudo até ferver, quando ferver desligue o fogo e estará pronto seu prato\",\r\n    \"porcoes\":\"8 a 9 porções\",\r\n    \"tempo_preparo\":\"25 min \",\r\n    \"dificuldade\":\"Difícil\",\r\n    \"descricao\":\"Essa é uma receita de salada para servir em qualquer ocasião que as pessoas amem beterrabas\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/registerRecipe"
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Receita",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":4,\r\n    \"id_usuario\": 1,\r\n    \"id_categoria\": 6,\r\n    \"titulo\":\"Beterraba ao molho de água\",\r\n    \"ingredientes\":\"1 litro de água; 3 Beterrabas;\",\r\n    \"instrucoes\":\"Adicione 1 litro de agua em uma panela, corte as beterrabas em rodelas e adicione na panela; Ligue o fogo, mexa tudo até ferver, quando ferver desligue o fogo e estará pronto seu prato\",\r\n    \"porcoes\":\"8 a 9 porções\",\r\n    \"tempo_preparo\":\"45 min \",\r\n    \"dificuldade\":\"Fácil\",\r\n    \"descricao\":\"Essa é uma receita de salada para servir em qualquer ocasião que as pessoas amem beterrabas\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/updateRecipe"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar receita",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"receitas\":[\r\n        {\"id\":2, \"id_usuario\":1}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/deleteRecipe"
+					},
+					"response": []
+				},
+				{
+					"name": "Selecionar por categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/selectRecipeForCategory?id_categoria=6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"selectRecipeForCategory"
+							],
+							"query": [
+								{
+									"key": "id_categoria",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Selecionar por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/selectRecipeForId?id=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"selectRecipeForId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Selecionar por titulo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/selectRecipeForTitle?titulo=Cenoura",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"selectRecipeForTitle"
+							],
+							"query": [
+								{
+									"key": "titulo",
+									"value": "Cenoura"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Selecionar por usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/selectRecipeForUser?id_usuario=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"selectRecipeForUser"
+							],
+							"query": [
+								{
+									"key": "id_usuario",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Selecionar por titulo e usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/selectRecipeForTitleUser?id_usuario=1&titulo=Beterraba",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"selectRecipeForTitleUser"
+							],
+							"query": [
+								{
+									"key": "id_usuario",
+									"value": "1"
+								},
+								{
+									"key": "titulo",
+									"value": "Beterraba"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Refeicoes",
+			"item": [
+				{
+					"name": "Registrar Refeição",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_usuario\":1,\r\n    \"id_receita\":3,\r\n    \"horario\":\"21:00:00\",\r\n    \"tipo\":\"Jantar\",\r\n    \"efetuada\": \"Não\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/registerMeal"
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Refeição",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":6,\r\n    \"id_usuario\":1,\r\n    \"titulo\":\"Teste refeição 2\",\r\n    \"horario\":\"21:00:00\",\r\n    \"tipo\":\"Jantar\",\r\n    \"efetuada\": \"Não\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/updateMeal"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Refeição",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refeicoes\":[\r\n        {\"id\":9, \"id_usuario\":1}\r\n       \r\n    ]\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/deleteMeal"
+					},
+					"response": []
+				},
+				{
+					"name": "Selecionar Refeições do usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/selectMeal?id_usuario=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"selectMeal"
+							],
+							"query": [
+								{
+									"key": "id_usuario",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favoritos",
+			"item": [
+				{
+					"name": "Registrar Favorito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_usuario\":1,\r\n    \"id_receita\":2\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/registerFav"
+					},
+					"response": []
+				},
+				{
+					"name": "Selecionar Favoritos do Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{host}}/selectFavs"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"favoritos\":[\r\n        {\r\n            \"id_usuario\":1,\r\n            \"id_receita\":2\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/deleteFavs"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": " <SEUIP>:3000",
+			"type": "string"
+		}
+	]
+}
